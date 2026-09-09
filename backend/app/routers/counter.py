@@ -2,7 +2,10 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from ..database import get_db
-from ..models import Counter
+from ..auth import get_current_user
+
+from ..models import User
+
 
 router = APIRouter(
     prefix="/counter",
@@ -10,33 +13,24 @@ router = APIRouter(
 )
 
 @router.get("/")
-def get_counter(db: Session = Depends(get_db)):
-    
-    counter = db.get(Counter, 1)
-
-    if counter is None:
-        counter = Counter(id=1, value=0)
-        db.add(counter)
-        db.commit()
-        db.refresh(counter)
-    
+def get_counter(
+    current_user: User = Depends(get_current_user)
+):
     return {
-        "value": counter.value
+        "value": current_user.counter.value
     }
 
 @router.post("/increment")
-def increment_counter(db: Session = Depends(get_db)):
-    
-    counter = db.get(Counter, 1)
+def increment_counter(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
 
-    if counter is None:
-        counter = Counter(id=1, value=0)
-        db.add(counter)
-    
-    counter.value += 1
+    current_user.counter.value += 1
 
     db.commit()
-    db.refresh(counter)
+    db.refresh(current_user.counter)
 
-    return {"value": counter.value}
-
+    return {
+        "value": current_user.counter.value
+    }
