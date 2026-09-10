@@ -12,7 +12,7 @@ router = APIRouter(
     tags=["counter"]
 )
 
-@router.get("/")
+@router.get("")
 def get_counter(
     current_user: User = Depends(get_current_user)
 ):
