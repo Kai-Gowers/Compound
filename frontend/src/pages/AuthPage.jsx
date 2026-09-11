@@ -23,7 +23,7 @@ export function AuthPage() {
         );
 
         if (isLogin) {
-            navigate("/counter");
+            navigate("/home");
         }
 
     };
