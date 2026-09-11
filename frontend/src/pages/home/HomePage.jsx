@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Grid } from "./Grid";
 
+import './HomePage.css';
+
 export function HomePage() {
 
     const [compoundScores, setCompoundScores] = useState([]);
@@ -15,10 +17,19 @@ export function HomePage() {
     }, []);
 
     return (
-        <div>
-            <button>Add Task</button>
-            <Grid compoundScores={compoundScores}/>
-        </div>
+        <main className="home-page">
+            <header className="home-header">
+                <div>
+                    <p className="home-eyebrow">Your progress</p>
+                    <h1>Daily compounds</h1>
+                </div>
+                <button type="button">Add Task</button>
+            </header>
+
+            <section className="progress-card">
+                <Grid compoundScores={compoundScores}/>
+            </section>
+        </main>
     );
 
 }

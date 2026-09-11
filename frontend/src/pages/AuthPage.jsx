@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
+import './AuthPage.css';
 
 export function AuthPage() {
 
@@ -30,35 +31,47 @@ export function AuthPage() {
     
 
     return (
-        <div>
-            <h1>{isLogin ? "Login": "Sign Up"}</h1>
+        <main className="auth-page">
+            <section className="auth-card">
+                <p className="auth-eyebrow">Compound</p>
+                <h1>{isLogin ? "Welcome back" : "Create your account"}</h1>
+                <p className="auth-description">
+                    {isLogin
+                        ? "Sign in to continue tracking your progress."
+                        : "Start building consistent progress, one day at a time."}
+                </p>
 
-            <form onSubmit={handleSubmit}>
-                <input 
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+                <form className="auth-form" onSubmit={handleSubmit}>
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        aria-label="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
 
-                <input 
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        aria-label="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
 
-                <button type="submit">
-                    {isLogin ? "Login" : "Sign Up"}
+                    <button type="submit">
+                        {isLogin ? "Login" : "Sign Up"}
+                    </button>
+                </form>
+
+                <button
+                    className="auth-toggle"
+                    type="button"
+                    onClick={() => setIsLogin(!isLogin)}
+                >
+                    {isLogin ? "Create an account" : "Already have an account?"}
                 </button>
-
-            </form>
-
-            <button onClick={() => setIsLogin(!isLogin)}>
-                {isLogin ? "Create an account" : "Already have an account?"}
-            </button>
-
-        </div>
+            </section>
+        </main>
     );
 
 }

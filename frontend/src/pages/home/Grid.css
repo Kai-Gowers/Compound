@@ -1,0 +1,7 @@
+.score-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 24px);
+  gap: 6px;
+  width: max-content;
+  min-height: 24px;
+}

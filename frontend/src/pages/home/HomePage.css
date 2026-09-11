@@ -1,0 +1,46 @@
+.home-page {
+  width: min(100% - 32px, 860px);
+  margin: 0 auto;
+  padding: 64px 0;
+}
+
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.home-header h1 {
+  margin: 2px 0 0;
+  color: #17211a;
+  font-size: 1.75rem;
+}
+
+.home-eyebrow {
+  margin: 0;
+  color: #68736b;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.progress-card {
+  padding: 28px;
+  overflow-x: auto;
+  background: #ffffff;
+  border: 1px solid #dfe5df;
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgb(31 41 55 / 6%);
+}
+
+@media (max-width: 520px) {
+  .home-page {
+    padding: 32px 0;
+  }
+
+  .home-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
