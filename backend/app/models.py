@@ -1,6 +1,6 @@
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from datetime import date
+from datetime import date as Date
 
 from .database import Base
 
@@ -12,11 +12,12 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(unique=True, index=True)
     password_hash: Mapped[str]
+
     counter: Mapped["Counter"] = relationship(
         back_populates="user"
     )
 
-    score: Mapped["Score"] = relationship(
+    scores: Mapped[list["Score"]] = relationship(
         back_populates="user"
     )
 
@@ -38,10 +39,17 @@ class Counter(Base):
 
 class Score(Base):
     __tablename__ = "scores"
+    __table_args__ = (
+        UniqueConstraint(
+            "user_id",
+            "date",
+            name="uq_scores_user_date",
+        ),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    value: Mapped[float] = mapped_column(default=0)
-    date: Mapped[date] = mapped_column(default=date.today)
+    score: Mapped[float] = mapped_column(default=0)
+    date: Mapped[Date] = mapped_column(default=Date.today)
 
     user_id: Mapped[int] = mapped_column(
         ForeignKey("users.id"),

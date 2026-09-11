@@ -1,4 +1,5 @@
 from pydantic import BaseModel, field_validator
+from datetime import date as Date
 
 class UserCreate(BaseModel):
     email: str
@@ -24,7 +25,6 @@ class UserCreate(BaseModel):
             raise ValueError("password has to be at least 5 characters")
         return v
 
-
 class UserLogin(BaseModel):
     email: str
     password: str
@@ -38,3 +38,10 @@ class UserLogin(BaseModel):
         if "@" not in v:
             raise ValueError("email must contain @")
         return v
+
+
+class ScoreResponse(BaseModel):
+    id: int
+    score: float
+    date: Date
+
