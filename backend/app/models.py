@@ -17,6 +17,11 @@ class User(Base):
         back_populates="user"
     )
 
+    goals: Mapped[list["Goal"]] = relationship(
+        back_populates="user"
+    )
+
+
 class Score(Base):
     __tablename__ = "scores"
     __table_args__ = (
@@ -39,6 +44,22 @@ class Score(Base):
         back_populates="scores"
     )
 
+
+class Goal(Base):
+    __tablename__ = "goals"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    description: Mapped[str] = mapped_column(default="")
+    completed: Mapped[bool] = mapped_column(default=False)
+    date: Mapped[Date] = mapped_column(default=Date.today)
+
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id"),
+    )
+
+    user: Mapped["User"] = relationship(
+        back_populates="goals"
+    )
 
 
 

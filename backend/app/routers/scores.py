@@ -31,5 +31,22 @@ def get_scores(
     ]
 
 
+@router.put("") # should have a field of some sort of task list / completion list
+def update_scores(
+    current_user: User = Depends(get_current_user)
+) -> list[ScoreResponse]:
 
+    sorted_scores = sorted(
+        current_user.scores,
+        key=lambda score: score.date
+    )[-100:]
+
+    return [
+        ScoreResponse(
+            id=score.id,
+            score=score.score,
+            date=score.date,
+        )
+        for score in sorted_scores
+    ]
 
