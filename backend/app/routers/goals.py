@@ -4,7 +4,7 @@ from ..security import get_current_user
 from ..models import Goal, User
 from ..schemas import GoalResponse, GoalCreate, GoalUpdate
 from ..database import get_db
-from .scores import recalculate_score_for_date
+from ..services.scores import recalculate_score_for_date
 from datetime import date as Date
 
 
