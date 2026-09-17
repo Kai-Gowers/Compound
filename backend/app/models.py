@@ -21,22 +21,6 @@ class User(Base):
         back_populates="user"
     )
 
-
-class Counter(Base):
-    __tablename__ = "counters"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    value: Mapped[int] = mapped_column(default=0)
-
-    user_id: Mapped[int] = mapped_column(
-        ForeignKey("users.id"),
-        unique=True
-    )
-
-    user: Mapped["User"] = relationship(
-        back_populates="counter"
-    )
-
 class Score(Base):
     __tablename__ = "scores"
     __table_args__ = (

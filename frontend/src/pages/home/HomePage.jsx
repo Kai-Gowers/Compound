@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Grid } from "./Grid";
+import { TodayGoals } from "./TodayGoals";
 
 import './HomePage.css';
 
@@ -29,6 +30,11 @@ export function HomePage() {
             <section className="progress-card">
                 <Grid compoundScores={compoundScores}/>
             </section>
+
+            <section className="today-goals">
+                <TodayGoals />
+            </section>
+
         </main>
     );
 
