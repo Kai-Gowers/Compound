@@ -1,4 +1,4 @@
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, field_validator, ConfigDict
 from datetime import date as Date
 
 class UserCreate(BaseModel):
@@ -45,3 +45,17 @@ class ScoreResponse(BaseModel):
     score: float
     date: Date
 
+class GoalResponse(BaseModel):
+    id: int
+    description: str
+    completed: bool
+    date: Date 
+
+    model_config = ConfigDict(from_attributes=True)
+
+class GoalCreate(BaseModel):
+    description: str
+
+class GoalUpdate(BaseModel):
+    description: str
+    completed: bool

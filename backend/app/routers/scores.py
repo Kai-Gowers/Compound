@@ -31,7 +31,7 @@ def get_scores(
     ]
 
 
-@router.put("") # should have a field of some sort of task list / completion list
+@router.put("")
 def update_scores(
     current_user: User = Depends(get_current_user)
 ) -> list[ScoreResponse]:
@@ -41,12 +41,27 @@ def update_scores(
         key=lambda score: score.date
     )[-100:]
 
-    return [
-        ScoreResponse(
-            id=score.id,
-            score=score.score,
-            date=score.date,
+    responses = []
+
+    for score in sorted_scores:
+        goals_for_date= [
+            goal for goal in current_user.goals
+            if goal.date == score.date
+        ]
+
+        if goals_for_date:
+            completed = sum(goal.completed for goal in goals_for_date)
+            calculated_score = completed / len(goals_for_date)
+        else:
+            calculated_score = 0
+        
+        responses.append(
+            ScoreResponse(
+                id=score.id,
+                score=calculated_score,
+                date=score.date
+            )
         )
-        for score in sorted_scores
-    ]
+
+    return responses
 
