@@ -13,10 +13,6 @@ class User(Base):
     email: Mapped[str] = mapped_column(unique=True, index=True)
     password_hash: Mapped[str]
 
-    counter: Mapped["Counter"] = relationship(
-        back_populates="user"
-    )
-
     scores: Mapped[list["Score"]] = relationship(
         back_populates="user"
     )
