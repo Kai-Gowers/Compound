@@ -5,6 +5,7 @@ from ..models import Goal, User
 from ..schemas import GoalResponse, GoalCreate, GoalUpdate
 from ..database import get_db
 from datetime import date as Date
+from scores import update_scores
 
 
 router = APIRouter(
@@ -46,13 +47,15 @@ def create_goal(
     db.add(new_goal)
     db.commit()
     db.refresh(new_goal)
+
+    update_scores(current_user=current_user)
     
     return new_goal
 
 
 @router.put("/{goal_id}", response_model=GoalResponse)
 def update_goal(
-    goal_id: id,
+    goal_id: int,
     data: GoalUpdate,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
@@ -60,7 +63,7 @@ def update_goal(
 
     goal = db.query(Goal).filter(
         Goal.id == goal_id,
-        Goal.user_id == goal.user_id
+        Goal.user_id == current_user.id
     ).first()
 
     if not goal:
@@ -71,5 +74,7 @@ def update_goal(
 
     db.commit()
     db.refresh(goal)
+
+    update_scores(current_user=current_user)
 
     return goal

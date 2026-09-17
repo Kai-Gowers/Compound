@@ -4,7 +4,7 @@ from sqlalchemy import select
 
 from ..security import create_access_token, hash_password, verify_password
 from ..database import get_db
-from ..models import Counter, User
+from ..models import User
 from ..schemas import UserCreate, UserLogin
 
 router = APIRouter(
@@ -36,13 +36,6 @@ def signup(
     )
     db.add(user)
     db.flush()
-
-    counter = Counter(
-        user_id=user.id,
-        value=0
-    )
-    db.add(counter)
-
     db.commit()
     db.refresh(user)
 

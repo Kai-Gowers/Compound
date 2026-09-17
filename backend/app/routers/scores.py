@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
-
+from sqlalchemy.orm import Session
 from ..security import get_current_user
-
+from ..database import get_db
 from ..models import User
 from ..schemas import ScoreResponse
 
@@ -33,7 +33,8 @@ def get_scores(
 
 @router.put("")
 def update_scores(
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
 ) -> list[ScoreResponse]:
 
     sorted_scores = sorted(
@@ -54,6 +55,11 @@ def update_scores(
             calculated_score = completed / len(goals_for_date)
         else:
             calculated_score = 0
+        
+        score.score = calculated_score
+
+        db.commit(score)
+        db.refresh(score)
         
         responses.append(
             ScoreResponse(
