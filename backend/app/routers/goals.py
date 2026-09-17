@@ -4,8 +4,8 @@ from ..security import get_current_user
 from ..models import Goal, User
 from ..schemas import GoalResponse, GoalCreate, GoalUpdate
 from ..database import get_db
+from .scores import recalculate_score_for_date
 from datetime import date as Date
-from scores import update_scores
 
 
 router = APIRouter(
@@ -39,16 +39,25 @@ def create_goal(
     db: Session = Depends(get_db)
 ) -> GoalResponse:
 
+    today = Date.today()
+
     new_goal = Goal(
         description=data.description,
+        date=today,
         user_id=current_user.id
     )
 
     db.add(new_goal)
+    db.flush()
+
+    recalculate_score_for_date(
+        db=db,
+        user_id=current_user.id,
+        target_date=today,
+    )
+
     db.commit()
     db.refresh(new_goal)
-
-    update_scores(current_user=current_user)
     
     return new_goal
 
@@ -72,9 +81,14 @@ def update_goal(
     goal.description = data.description
     goal.completed = data.completed
 
+    db.flush()
+
+    recalculate_score_for_date(
+        db=db,
+        user_id=current_user.id,
+        target_date=goal.date,
+    )
+
     db.commit()
     db.refresh(goal)
-
-    update_scores(current_user=current_user)
-
     return goal
