@@ -32,7 +32,7 @@ def get_goals(
     ]
 
 
-@router.post("/", response_model=GoalResponse)
+@router.post("/")
 def create_goal(
     data: GoalCreate,
     current_user: User = Depends(get_current_user),
@@ -59,10 +59,15 @@ def create_goal(
     db.commit()
     db.refresh(new_goal)
     
-    return new_goal
+    return GoalResponse(
+        id=new_goal.id,
+        description=new_goal.description,
+        completed=new_goal.completed,
+        date=new_goal.date,
+    ) 
 
 
-@router.put("/{goal_id}", response_model=GoalResponse)
+@router.put("/{goal_id}")
 def update_goal(
     goal_id: int,
     data: GoalUpdate,
@@ -91,4 +96,10 @@ def update_goal(
 
     db.commit()
     db.refresh(goal)
-    return goal
+
+    return GoalResponse(
+        id=goal.id,
+        description=goal.description,
+        completed=goal.completed,
+        date=goal.date
+    )
