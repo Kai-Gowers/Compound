@@ -41,7 +41,7 @@ class UserLogin(BaseModel):
 
 
 class ScoreResponse(BaseModel):
-    id: int
+    id: int | None
     score: float
     date: Date
 
