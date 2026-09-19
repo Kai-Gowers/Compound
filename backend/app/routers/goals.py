@@ -14,7 +14,7 @@ router = APIRouter(
 )
 
 
-@router.get("/")
+@router.get("")
 def get_goals(
     current_user: User = Depends(get_current_user)
 ) -> list[GoalResponse]:
@@ -32,7 +32,7 @@ def get_goals(
     ]
 
 
-@router.post("/")
+@router.post("")
 def create_goal(
     data: GoalCreate,
     current_user: User = Depends(get_current_user),
