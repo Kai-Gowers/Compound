@@ -10,11 +10,12 @@ export function HomePage() {
 
     const [compoundScores, setCompoundScores] = useState([]);
 
+    const getScores = async () => {
+        const response = await axios.get('/api/scores');
+        setCompoundScores(response.data);
+    }
+
     useEffect(() => {
-        const getScores = async () => {
-            const response = await axios.get('/api/scores');
-            setCompoundScores(response.data);
-        }
         getScores();
     }, []);
 
@@ -44,7 +45,7 @@ export function HomePage() {
             </section>
 
             <section className="today-goals">
-                <TodayGoals />
+                <TodayGoals onGoalChange={getScores}/>
             </section>
 
         </main>
