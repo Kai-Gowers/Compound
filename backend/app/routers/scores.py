@@ -15,7 +15,7 @@ def get_scores(
     current_user: User = Depends(get_current_user)
 ) -> list[ScoreResponse]:
 
-    today = date.today()
+    last_day_of_year = date(date.today().year, 12, 31)
 
     score_by_date = {
         score.date: score
@@ -24,9 +24,9 @@ def get_scores(
 
     responses = []
 
-    for days_ago in range(99, -1, -1):
+    for days_ago in range(365, -1, -1):
         
-        current_date = today - timedelta(days=days_ago)
+        current_date = last_day_of_year - timedelta(days=days_ago)
 
         existing_score = score_by_date.get(current_date)
 

@@ -1,6 +1,7 @@
 .grid-unit {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  aspect-ratio: 1;
+  height: auto;
   border: 1px solid rgb(27 31 35 / 8%);
   border-radius: 4px;
   transition:
