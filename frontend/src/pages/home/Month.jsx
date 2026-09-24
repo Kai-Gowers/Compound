@@ -12,7 +12,11 @@ export function Month({ month, monthScores }) {
 
             {monthScores.map((monthScore) => {
                 return (
-                    <GridUnit key={monthScore.id} score={monthScore.score}/>
+                    <GridUnit 
+                        key={monthScore.id} 
+                        score={monthScore.score}
+                        title={`${monthScore.date}: ${monthScore.score * 100}`}
+                    />
                 );
             })}
 
