@@ -1,8 +1,9 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Grid } from "./Grid";
 import { TodayGoals } from "./TodayGoals";
 import { useNavigate } from "react-router-dom";
+
+import { api } from "../../api/client";
 
 import './HomePage.css';
 
@@ -11,7 +12,7 @@ export function HomePage() {
     const [compoundScores, setCompoundScores] = useState([]);
 
     const getScores = async () => {
-        const response = await axios.get('/api/scores');
+        const response = await api.get('/scores');
         setCompoundScores(response.data);
     }
 

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+
+import { api } from '../../api/client';
 
 import './TodayGoals.css';
 
@@ -8,7 +9,7 @@ export function TodayGoals({ onGoalChange }) {
     const [goals, setGoals] = useState([]);
 
     const fetchGoals = async () => {
-            const response = await axios.get('/api/goals');
+            const response = await api.get('/goals');
             setGoals(response.data);
     }
 
@@ -17,7 +18,7 @@ export function TodayGoals({ onGoalChange }) {
     }, []);
 
     const toggleCompleted = async (goal) => {
-        const response = await axios.put(`/api/goals/${goal.id}`, {
+        const response = await api.put(`/goals/${goal.id}`, {
             description: goal.description,
             completed: !goal.completed,
         });
@@ -28,7 +29,7 @@ export function TodayGoals({ onGoalChange }) {
     };
 
     const deleteGoal = async (goal) => {
-        const response = await axios.delete(`/api/goals/${goal.id}`);
+        await api.delete(`/goals/${goal.id}`);
         fetchGoals();
         onGoalChange();
     }

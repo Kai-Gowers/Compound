@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+
+import { api } from '../../api/client';
 
 export function AddTaskPage() {
 
@@ -10,7 +11,7 @@ export function AddTaskPage() {
     }
 
     const addTask = async () => {
-        const response = await axios.post('/api/goals', {
+        await api.post('/goals', {
             description: description
         });
     }

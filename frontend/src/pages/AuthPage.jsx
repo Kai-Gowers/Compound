@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+
+import { api } from "../api/client";
 
 import './AuthPage.css';
 
@@ -17,10 +18,9 @@ export function AuthPage() {
 
         const endpoint = isLogin ? "/login" : "/signup";
 
-        await axios.post(
-            `/api/auth${endpoint}`,
-            { email, password },
-            { withCredentials: true}
+        await api.post(
+            `/auth${endpoint}`,
+            { email, password }
         );
 
         if (isLogin) {
