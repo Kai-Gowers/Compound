@@ -28,7 +28,9 @@ export function AddTaskPage() {
                     onClick={addTask}
                     className="send-button"
                 >Add Task</button>
+
+
         </div>
-    )
+    ) // add a list of the current goals
 
 }

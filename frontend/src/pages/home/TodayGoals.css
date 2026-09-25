@@ -24,6 +24,21 @@
   color: #17211a;
 }
 
+.deleteGoal {
+  min-width: 28px;
+  padding: 0.25rem 0.5rem;
+  border: none;
+  background: transparent;
+  color: #8a8f8a;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.deleteGoal:hover {
+  color: #c62828;
+}
+
 .goal-complete-button {
   min-width: 36px;
   padding: 0.25rem 0.5rem;

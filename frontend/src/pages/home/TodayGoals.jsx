@@ -7,11 +7,12 @@ export function TodayGoals({ onGoalChange }) {
 
     const [goals, setGoals] = useState([]);
 
-    useEffect(() => {
-        const fetchGoals = async () => {
+    const fetchGoals = async () => {
             const response = await axios.get('/api/goals');
             setGoals(response.data);
-        }
+    }
+
+    useEffect(() => {
         fetchGoals();
     }, []);
 
@@ -26,6 +27,12 @@ export function TodayGoals({ onGoalChange }) {
         onGoalChange();
     };
 
+    const deleteGoal = async (goal) => {
+        const response = await axios.delete(`/api/goals/${goal.id}`);
+        fetchGoals();
+        onGoalChange();
+    }
+
     return (
         <div className="today-goals-list">
             <h2>Today's Goals</h2>
@@ -39,6 +46,13 @@ export function TodayGoals({ onGoalChange }) {
                             onClick={() => toggleCompleted(goal)}
                         >
                             {goal.completed ? '✓' : '✗'}
+                        </button>
+                        <button
+                            type="button"
+                            className="deleteGoal"
+                            onClick={() => deleteGoal(goal)}
+                        >
+                            ×
                         </button>
                     </li>
                 ))}

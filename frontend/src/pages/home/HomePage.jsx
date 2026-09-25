@@ -36,7 +36,7 @@ export function HomePage() {
                     type="button"
                     onClick={goToAddTask}
                 >
-                    Add Task
+                    Current Goals
                 </button>
             </header>
 

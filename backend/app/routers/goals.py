@@ -103,3 +103,29 @@ def update_goal(
         completed=goal.completed,
         date=goal.date
     )
+
+@router.delete("/{goal_id}")
+def delete_goal(
+    goal_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+) -> None:
+    goal = db.query(Goal).filter(
+        Goal.id == goal_id,
+        Goal.user_id == current_user.id
+    ).first()
+
+    if not goal:
+        raise HTTPException(status_code=404, detail="Goal not found")
+
+    db.delete(goal)
+    
+    recalculate_score_for_date(
+        db=db,
+        user_id=current_user.id,
+        target_date=Date.today(),
+    )
+
+    db.commit()
+
+
