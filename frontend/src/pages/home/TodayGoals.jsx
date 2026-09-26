@@ -1,16 +1,27 @@
 import { useState, useEffect } from 'react';
-
 import { api } from '../../api/client';
-
 import './TodayGoals.css';
 
 export function TodayGoals({ onGoalChange }) {
 
     const [goals, setGoals] = useState([]);
+    const [description, setDescription] = useState("");
+
+    const saveDescription = (event) => {
+        setDescription(event.target.value)
+    }
+
+    const addGoal = async () => {
+        await api.post('/goals', {
+            description: description
+        });
+        onGoalChange();
+        fetchGoals();
+    }
 
     const fetchGoals = async () => {
-            const response = await api.get('/goals');
-            setGoals(response.data);
+        const response = await api.get('/goals');
+        setGoals(response.data);
     }
 
     useEffect(() => {
@@ -58,6 +69,23 @@ export function TodayGoals({ onGoalChange }) {
                     </li>
                 ))}
             </ul>
+
+            <div className="task-input-container">
+                <input 
+                    placeholder="Add a Goal" 
+                    size="30"
+                    onChange={saveDescription}
+                    value={description}
+                    className="task-input"
+                />
+                <button 
+                    onClick={addGoal}
+                    className="send-button"
+                >Add Goal</button>
+
+
+        </div>
+
         </div>
     );
 

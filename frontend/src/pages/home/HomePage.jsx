@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Grid } from "./Grid";
 import { TodayGoals } from "./TodayGoals";
-import { useNavigate } from "react-router-dom";
 
 import { api } from "../../api/client";
 
@@ -20,12 +19,6 @@ export function HomePage() {
         getScores();
     }, []);
 
-    const navigate = useNavigate();
-
-    const goToAddTask = () => {
-        navigate("/addtask");
-    }
-
     return (
         <main className="home-page">
             <header className="home-header">
@@ -33,12 +26,6 @@ export function HomePage() {
                     <p className="home-eyebrow">Your progress</p>
                     <h1>Daily compounds</h1>
                 </div>
-                <button 
-                    type="button"
-                    onClick={goToAddTask}
-                >
-                    Current Goals
-                </button>
             </header>
 
             <section className="progress-card">
