@@ -38,6 +38,10 @@ class UserLogin(BaseModel):
         if "@" not in v:
             raise ValueError("email must contain @")
         return v
+    
+class UserResponse(BaseModel):
+    id: int
+    email: str
 
 
 class ScoreResponse(BaseModel):

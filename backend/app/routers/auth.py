@@ -2,15 +2,22 @@ from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 
-from ..security import create_access_token, hash_password, verify_password
+from ..security import create_access_token, get_current_user, hash_password, verify_password
 from ..database import get_db
 from ..models import User
-from ..schemas import UserCreate, UserLogin
+from ..schemas import UserCreate, UserLogin, UserResponse
 
 router = APIRouter(
     prefix="/auth",
     tags=["auth"]
 )
+
+@router.get("/me")
+def me(current_user: User = Depends(get_current_user)) -> UserResponse:
+    return UserResponse(
+        id=current_user.id,
+        email=current_user.email,
+    )
 
 @router.post("/signup")
 def signup(

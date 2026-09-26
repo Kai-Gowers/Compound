@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthProvider";
 
 import { api } from "../api/client";
 
@@ -7,6 +8,7 @@ import './AuthPage.css';
 
 export function AuthPage() {
 
+    const { setUser } = useAuth();
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -24,11 +26,12 @@ export function AuthPage() {
         );
 
         if (isLogin) {
+            const me  = await api.get("/auth/me");
+            setUser(me.data);
             navigate("/home");
         }
 
     };
-    
 
     return (
         <main className="auth-page">
