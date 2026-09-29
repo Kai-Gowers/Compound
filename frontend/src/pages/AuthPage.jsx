@@ -12,24 +12,40 @@ export function AuthPage() {
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
+
         e.preventDefault();
+        setError("");
 
         const endpoint = isLogin ? "/login" : "/signup";
 
-        await api.post(
-            `/auth${endpoint}`,
-            { email, password }
-        );
+        try {
+            await api.post(
+                `/auth${endpoint}`,
+                { email, password }
+            );
 
-        if (isLogin) {
-            const me  = await api.get("/auth/me");
-            setUser(me.data);
-            navigate("/home");
+            if (isLogin) {
+                const me  = await api.get("/auth/me");
+                setUser(me.data);
+                navigate("/home");
+            }
+        } catch (error) {
+            const detail = error.response?.data?.detail;
+            let message = "Something went wrong";
+
+            if (typeof detail === "string") {
+                message = detail;
+            } else if (Array.isArray(detail) && detail[0]?.msg) {
+                message = detail[0].msg;
+            }
+            setError(message);
         }
+
 
     };
 
@@ -60,6 +76,8 @@ export function AuthPage() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+
+                    {error && <p className="auth-error">{error}</p>}
 
                     <button type="submit">
                         {isLogin ? "Login" : "Sign Up"}
