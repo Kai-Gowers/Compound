@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../../auth/AuthProvider";
 import { Grid } from "./Grid";
 import { TodayGoals } from "./TodayGoals";
 
@@ -8,11 +10,20 @@ import './HomePage.css';
 
 export function HomePage() {
 
+    const { setUser } = useAuth();
     const [compoundScores, setCompoundScores] = useState([]);
+
+    const navigate = useNavigate();
 
     const getScores = async () => {
         const response = await api.get('/scores');
         setCompoundScores(response.data);
+    }
+
+    const logOut = async () => {
+        const response = await api.post('/auth/logout');
+        setUser(null);
+        navigate("/");
     }
 
     useEffect(() => {
@@ -26,6 +37,14 @@ export function HomePage() {
                     <p className="home-eyebrow">Your progress</p>
                     <h1>Daily compounds</h1>
                 </div>
+
+                <button 
+                    className="log-out"
+                    onClick={logOut}
+                >
+                    Log Out
+                </button>
+
             </header>
 
             <section className="progress-card">
