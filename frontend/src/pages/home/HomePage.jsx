@@ -12,12 +12,18 @@ export function HomePage() {
 
     const { setUser } = useAuth();
     const [compoundScores, setCompoundScores] = useState([]);
+    const [error, setError] = useState("");
 
     const navigate = useNavigate();
 
     const getScores = async () => {
-        const response = await api.get('/scores');
-        setCompoundScores(response.data);
+        try {
+            const response = await api.get('/scores');
+            setCompoundScores(response.data);
+            setError("");
+        } catch (error) {
+            setError("Failed to retrieve scores");
+        }
     }
 
     const logOut = async () => {
@@ -46,6 +52,8 @@ export function HomePage() {
                 </button>
 
             </header>
+
+            {error && <p className="score-error">{error}</p>}
 
             <section className="progress-card">
                 <Grid compoundScores={compoundScores}/>

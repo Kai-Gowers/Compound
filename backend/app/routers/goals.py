@@ -118,12 +118,13 @@ def delete_goal(
     if not goal:
         raise HTTPException(status_code=404, detail="Goal not found")
 
+    target_date = goal.date
     db.delete(goal)
     
     recalculate_score_for_date(
         db=db,
         user_id=current_user.id,
-        target_date=Date.today(),
+        target_date=target_date,
     )
 
     db.commit()
