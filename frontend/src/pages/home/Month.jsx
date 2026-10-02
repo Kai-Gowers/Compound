@@ -28,7 +28,7 @@ export function Month({ month, monthScores }) {
             {monthScores.map((monthScore) => {
                 return (
                     <GridUnit 
-                        key={monthScore.id} 
+                        key={monthScore.date} 
                         score={monthScore.score}
                         title={`${numToMonth[Number(monthScore.date.slice(5, 7))]} ${Number(monthScore.date.slice(8, 10))}: ${monthScore.score * 100}`}
                     />
