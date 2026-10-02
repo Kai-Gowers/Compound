@@ -24,16 +24,24 @@ export function AuthPage() {
         const endpoint = isLogin ? "/login" : "/signup";
 
         try {
+
             await api.post(
                 `/auth${endpoint}`,
                 { email, password }
             );
-
-            if (isLogin) {
-                const me  = await api.get("/auth/me");
-                setUser(me.data);
-                navigate("/home");
+            
+            if (!isLogin) {
+                await api.post(
+                    `/auth/login`,
+                    { email, password }
+                );
             }
+            
+            const me  = await api.get("/auth/me");
+            setUser(me.data);
+            navigate("/home");
+            
+
         } catch (error) {
             const detail = error.response?.data?.detail;
             let message = "Something went wrong";
