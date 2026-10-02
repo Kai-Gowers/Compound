@@ -6,6 +6,7 @@ from ..security import create_access_token, get_current_user, hash_password, ver
 from ..database import get_db
 from ..models import User
 from ..schemas import UserCreate, UserLogin, UserResponse
+from datetime import date as Date
 
 router = APIRouter(
     prefix="/auth",
@@ -39,8 +40,10 @@ def signup(
 
     user = User(
         email = data.email,
-        password_hash = password_hash
+        password_hash = password_hash,
+        last_active_day = Date.today()
     )
+    
     db.add(user)
     db.flush()
     db.commit()
