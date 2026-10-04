@@ -10,15 +10,28 @@ import './HomePage.css';
 
 export function HomePage() {
 
+    const now = new Date();
+    const end = [
+        now.getFullYear(),
+        String(now.getMonth() + 1).padStart(2, "0"),
+        String(now.getDate()).padStart(2, "0"),
+    ].join("-");
+    const start = [
+        now.getFullYear() - 1,
+        String(now.getMonth() + 1).padStart(2, "0"),
+        String(now.getDate()).padStart(2, "0"),
+    ].join("-");
+
     const { setUser } = useAuth();
     const [compoundScores, setCompoundScores] = useState([]);
     const [error, setError] = useState("");
+    const [period, setPeriod] = useState([start, end]);
 
     const navigate = useNavigate();
 
     const getScores = async () => {
         try {
-            const response = await api.get('/scores');
+            const response = await api.get(`/scores?start_date=${period[0]}&end_date=${period[1]}`);
             setCompoundScores(response.data);
             setError("");
         } catch (error) {

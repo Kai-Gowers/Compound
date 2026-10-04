@@ -12,10 +12,10 @@ router = APIRouter(
 
 @router.get("")
 def get_scores(
+    start_date: date,
+    end_date: date,
     current_user: User = Depends(get_current_user)
 ) -> list[ScoreResponse]:
-
-    last_day_of_year = date(date.today().year, 12, 31)
 
     score_by_date = {
         score.date: score
@@ -24,9 +24,9 @@ def get_scores(
 
     responses = []
 
-    for days_ago in range(365, -1, -1):
-        
-        current_date = last_day_of_year - timedelta(days=days_ago)
+    current_date = start_date
+
+    while current_date != end_date + timedelta(days=1):
 
         existing_score = score_by_date.get(current_date)
 
@@ -46,7 +46,11 @@ def get_scores(
                     date=current_date,
                 )
             )
+
+        current_date = current_date + timedelta(days=1)
     
+
+
     return responses
 
 
