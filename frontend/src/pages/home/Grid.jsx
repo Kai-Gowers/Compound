@@ -7,6 +7,7 @@ function parseLocalDate(iso) {
 }
 
 export function Grid({ compoundScores }) {
+    
     const numToMonth = {
         1: "January",
         2: "February",
