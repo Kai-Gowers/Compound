@@ -74,17 +74,23 @@ export function Grid({ compoundScores }) {
                 ))}
             </div>
             <div className="grid">
-                {cells.map((cell) =>
-                    cell.kind === "pad" ? (
-                        <div key={cell.key} className="grid-unit grid-unit--empty" />
-                    ) : (
+                {cells.map((cell) => {
+                    if (cell.kind === "pad") {
+                        return (
+                            <div 
+                                key={cell.key} 
+                                className="grid-unit grid-unit--empty" 
+                            />
+                        );
+                    }
+                    return (
                         <GridUnit
                             key={cell.key}
                             score={cell.score.score}
                             title={`${numToMonth[Number(cell.score.date.slice(5, 7))]} ${Number(cell.score.date.slice(8, 10))}: ${Math.round(cell.score.score * 100)}`}
                         />
-                    )
-                )}
+                    );
+                })}
             </div>
         </div>
     );
