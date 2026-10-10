@@ -26,8 +26,20 @@ export function HomePage() {
     const [compoundScores, setCompoundScores] = useState([]);
     const [error, setError] = useState("");
     const [period, setPeriod] = useState([start, end]);
+    const [years, setYears] = useState([]);
 
     const navigate = useNavigate();
+
+    const getYears = () => {
+        const now = new Date();
+        const year = now.getFullYear();
+        const years = [];
+        
+        for (let i = year; i > 2022; i = i - 1) {
+            years.push(i);
+        }
+        setYears(years);
+    }
 
     const getScores = async () => {
         try {
@@ -39,6 +51,10 @@ export function HomePage() {
         }
     }
 
+    const putYears = async (year) => {
+        setPeriod([`${year}-01-01`, `${year}-12-31`]);
+    }
+
     const logOut = async () => {
         const response = await api.post('/auth/logout');
         setUser(null);
@@ -47,7 +63,11 @@ export function HomePage() {
 
     useEffect(() => {
         getScores();
-    }, []);
+    }, [period]);
+
+    useEffect(() => {
+        getYears();
+    }, [])
 
     return (
         <main className="home-page">
@@ -69,7 +89,31 @@ export function HomePage() {
             {error && <p className="score-error">{error}</p>}
 
             <section className="progress-card">
-                <Grid compoundScores={compoundScores}/>
+                <div className="progress-card-body">
+                    <div className="progress-graph">
+                        <Grid compoundScores={compoundScores}/>
+                    </div>
+                    <ul className="year-tabs">
+                        {years.map((year) => {
+                            const selected =
+                                period[0] === `${year}-01-01` &&
+                                period[1] === `${year}-12-31`;
+
+                            return (
+                                <li key={year}>
+                                    <button
+                                        type="button"
+                                        className={`year-tab${selected ? " year-tab--selected" : ""}`}
+                                        aria-current={selected ? "true" : undefined}
+                                        onClick={() => putYears(year)}
+                                    >
+                                        {year}
+                                    </button>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </div>
             </section>
 
             <section className="today-goals">
