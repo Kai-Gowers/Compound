@@ -3,12 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../auth/AuthProvider";
 import { Grid } from "./Grid";
 import { TodayGoals } from "./TodayGoals";
+import { DateGoalHistory } from './DateGoalHistory';
 
 import { api } from "../../api/client";
 
 import './HomePage.css';
 
 export function HomePage() {
+
+    let content
 
     const now = new Date();
     const end = [
@@ -27,6 +30,7 @@ export function HomePage() {
     const [error, setError] = useState("");
     const [period, setPeriod] = useState([start, end]);
     const [years, setYears] = useState([]);
+    const [selectedDate, setSelectedDate] = useState(null);
 
     const navigate = useNavigate();
 
@@ -91,7 +95,7 @@ export function HomePage() {
             <section className="progress-card">
                 <div className="progress-card-body">
                     <div className="progress-graph">
-                        <Grid compoundScores={compoundScores}/>
+                        <Grid compoundScores={compoundScores} setSelectedDate={setSelectedDate} />
                     </div>
                     <ul className="year-tabs">
                         {years.map((year) => {
@@ -120,6 +124,9 @@ export function HomePage() {
                 <TodayGoals onGoalChange={getScores}/>
             </section>
 
+            <section>
+                {selectedDate && <DateGoalHistory date={selectedDate}/>}
+            </section>
         </main>
     );
 

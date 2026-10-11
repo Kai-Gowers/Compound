@@ -103,7 +103,6 @@ export function TodayGoals({ onGoalChange }) {
                             className="deleteGoal"
                             onClick={() => deleteGoal(goal)}
                         >
-                            ×
                         </button>
                     </li>
                 ))}

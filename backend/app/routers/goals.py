@@ -16,13 +16,13 @@ router = APIRouter(
 
 @router.get("")
 def get_goals(
+    date: Date = Date.today(),
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ) -> list[GoalResponse]:
     
-    today = Date.today()
     
-    if today != current_user.last_active_day:
+    if date > current_user.last_active_day:
 
         goals = db.query(Goal).filter(
             Goal.user_id == current_user.id,
@@ -33,7 +33,7 @@ def get_goals(
             new_goal = Goal(
                 description=goal.description,
                 completed=False,
-                date=today,
+                date=date,
                 user_id=current_user.id
             )
             db.add(new_goal)
@@ -41,10 +41,10 @@ def get_goals(
         recalculate_score_for_date(
             db=db,
             user_id=current_user.id,
-            target_date=today,
+            target_date=date,
         )
 
-        current_user.last_active_day = today
+        current_user.last_active_day = date
         
         db.commit()
 
@@ -56,7 +56,7 @@ def get_goals(
             date=goal.date,
         )
         for goal in current_user.goals
-        if goal.date == today
+        if goal.date == date
     ]
 
 
