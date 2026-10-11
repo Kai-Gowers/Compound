@@ -81,6 +81,23 @@
   color: #ffffff;
 }
 
+.goals-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
+  align-items: start;
+  gap: 20px;
+}
+
+.date-history-slot {
+  margin-top: 24px;
+}
+
+@media (max-width: 720px) {
+  .goals-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 520px) {
   .home-page {
     padding: 32px 0;

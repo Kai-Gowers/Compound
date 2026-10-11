@@ -30,7 +30,7 @@ export function DateGoalHistory({ date }) {
 
             {goals.map((goal) => (
                 <li key={goal.id}>
-                    {goal.description + ":" + (goal.completed ? "completed" : "not completed")}
+                    {goal.description + ": " + (goal.completed ? "completed" : "not completed")}
                 </li>
             ))}
 

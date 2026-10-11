@@ -120,13 +120,16 @@ export function HomePage() {
                 </div>
             </section>
 
-            <section className="today-goals">
-                <TodayGoals onGoalChange={getScores}/>
-            </section>
-
-            <section>
-                {selectedDate && <DateGoalHistory date={selectedDate}/>}
-            </section>
+            <div className="goals-row">
+                <section className="today-goals">
+                    <TodayGoals onGoalChange={getScores}/>
+                </section>
+                {selectedDate && (
+                    <aside className="date-history-slot">
+                        <DateGoalHistory date={selectedDate}/>
+                    </aside>
+                )}
+            </div>
         </main>
     );
 
