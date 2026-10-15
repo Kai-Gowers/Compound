@@ -68,7 +68,11 @@ export function HomePage() {
     }
 
     const selectDate = (date) => {
-        setSelectedDate(date);
+        if (date === selectedDate) {
+            setSelectedDate(null);
+        } else {
+            setSelectedDate(date);
+        }
     }
 
     useEffect(() => {
