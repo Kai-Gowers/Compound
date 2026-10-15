@@ -65,6 +65,10 @@ export function HomePage() {
         navigate("/");
     }
 
+    const selectDate = (date) => {
+        setSelectedDate(date);
+    }
+
     useEffect(() => {
         getScores();
     }, [period]);
@@ -95,7 +99,7 @@ export function HomePage() {
             <section className="progress-card">
                 <div className="progress-card-body">
                     <div className="progress-graph">
-                        <Grid compoundScores={compoundScores} setSelectedDate={setSelectedDate} />
+                        <Grid compoundScores={compoundScores} onSelectDate={selectDate} />
                     </div>
                     <ul className="year-tabs">
                         {years.map((year) => {

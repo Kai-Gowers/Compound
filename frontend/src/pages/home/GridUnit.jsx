@@ -1,16 +1,12 @@
 import './GridUnit.css';
 
-export function GridUnit({ score, title, date, setSelectedDate }) {
+export function GridUnit({ score, title, date, onSelectDate }) {
 
-    const lightness = 95 - score * 55
-
-    const clickDate = () => {
-        setSelectedDate(date);
-    }
+    const lightness = 95 - score * 55;
 
     return (
         <div
-            onClick={clickDate}
+            onClick={() => onSelectDate(date)}
             title={title}
             className="grid-unit"
             style={{

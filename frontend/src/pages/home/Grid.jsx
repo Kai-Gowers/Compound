@@ -6,7 +6,7 @@ function parseLocalDate(iso) {
     return new Date(year, month - 1, day);
 }
 
-export function Grid({ compoundScores, setSelectedDate }) {
+export function Grid({ compoundScores, onSelectDate }) {
     
     const numToMonth = {
         1: "January",
@@ -90,7 +90,7 @@ export function Grid({ compoundScores, setSelectedDate }) {
                             score={cell.score.score}
                             title={`${numToMonth[Number(cell.score.date.slice(5, 7))]} ${Number(cell.score.date.slice(8, 10))}: ${Math.round(cell.score.score * 100)}`}
                             date = {cell.score.date}
-                            setSelectedDate={setSelectedDate}
+                            onSelectDate={onSelectDate}
                         />
                     );
                 })}
