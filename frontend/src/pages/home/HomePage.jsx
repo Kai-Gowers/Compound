@@ -58,9 +58,13 @@ export function HomePage() {
     }
 
     const logOut = async () => {
-        const response = await api.post('/auth/logout');
-        setUser(null);
-        navigate("/");
+        try {
+            const response = await api.post('/auth/logout');
+            setUser(null);
+            navigate("/");
+        } catch (error) {
+            setError("Error - Failed to Log Out");
+        }
     }
 
     const selectDate = (date) => {
