@@ -22,7 +22,7 @@ def get_goals(
 ) -> list[GoalResponse]:
     
     
-    if date > current_user.last_active_day:
+    if date == Date.today() and date > current_user.last_active_day:
 
         goals = db.query(Goal).filter(
             Goal.user_id == current_user.id,
