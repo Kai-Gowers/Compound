@@ -11,8 +11,6 @@ import './HomePage.css';
 
 export function HomePage() {
 
-    let content
-
     const now = new Date();
     const end = [
         now.getFullYear(),
