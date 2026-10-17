@@ -5,6 +5,7 @@ import { Grid } from "./Grid";
 import { TodayGoals } from "./TodayGoals";
 import { DateGoalHistory } from './DateGoalHistory';
 import { HomeHeader } from './HomeHeader';
+import { currentYearRange, listOfYears } from '../../utils/dates';
 
 import { api } from "../../api/client";
 
@@ -12,37 +13,16 @@ import './HomePage.css';
 
 export function HomePage() {
 
-    const now = new Date();
-    const end = [
-        now.getFullYear(),
-        String(now.getMonth() + 1).padStart(2, "0"),
-        String(now.getDate()).padStart(2, "0"),
-    ].join("-");
-    const start = [
-        now.getFullYear() - 1,
-        String(now.getMonth() + 1).padStart(2, "0"),
-        String(now.getDate()).padStart(2, "0"),
-    ].join("-");
+    const [start, end] = currentYearRange();
+    const years = listOfYears(2022);    // TODO: Make the year be the year they signed up, not arbitarily 2022
 
     const { setUser } = useAuth();
     const [compoundScores, setCompoundScores] = useState([]);
     const [error, setError] = useState("");
     const [period, setPeriod] = useState([start, end]);
-    const [years, setYears] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
 
     const navigate = useNavigate();
-
-    const getYears = () => {
-        const now = new Date();
-        const year = now.getFullYear();
-        const years = [];
-        
-        for (let i = year; i > 2022; i = i - 1) {
-            years.push(i);
-        }
-        setYears(years);
-    }
 
     const getScores = async () => {
         try {
@@ -79,10 +59,6 @@ export function HomePage() {
     useEffect(() => {
         getScores();
     }, [period]);
-
-    useEffect(() => {
-        getYears();
-    }, [])
 
     return (
         <main className="home-page">
