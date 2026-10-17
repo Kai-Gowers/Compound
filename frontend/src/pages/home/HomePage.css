@@ -4,27 +4,6 @@
   padding: 64px 0;
 }
 
-.home-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 20px;
-}
-
-.home-header h1 {
-  margin: 2px 0 0;
-  color: #17211a;
-  font-size: 1.75rem;
-}
-
-.home-eyebrow {
-  margin: 0;
-  color: #68736b;
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
 .progress-card {
   padding: 28px;
   overflow-x: auto;
@@ -101,10 +80,5 @@
 @media (max-width: 520px) {
   .home-page {
     padding: 32px 0;
-  }
-
-  .home-header {
-    align-items: flex-start;
-    flex-direction: column;
   }
 }

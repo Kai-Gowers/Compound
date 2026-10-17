@@ -4,6 +4,7 @@ import { useAuth } from "../../auth/AuthProvider";
 import { Grid } from "./Grid";
 import { TodayGoals } from "./TodayGoals";
 import { DateGoalHistory } from './DateGoalHistory';
+import { HomeHeader } from './HomeHeader';
 
 import { api } from "../../api/client";
 
@@ -85,20 +86,8 @@ export function HomePage() {
 
     return (
         <main className="home-page">
-            <header className="home-header">
-                <div>
-                    <p className="home-eyebrow">Your progress</p>
-                    <h1>Daily compounds</h1>
-                </div>
 
-                <button 
-                    className="log-out"
-                    onClick={logOut}
-                >
-                    Log Out
-                </button>
-
-            </header>
+            <HomeHeader onLogout={logOut}/>
 
             {error && <p className="score-error">{error}</p>}
 
