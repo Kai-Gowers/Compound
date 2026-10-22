@@ -25,7 +25,7 @@ export function listOfYears(beginYear) {
     const year = now.getFullYear();
     const years = [];
         
-    for (let i = year; i > beginYear; i = i - 1) {
+    for (let i = year; i >= beginYear; i = i - 1) {
         years.push(i);
     }
 

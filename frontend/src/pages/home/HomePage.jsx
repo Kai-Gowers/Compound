@@ -14,13 +14,14 @@ import './HomePage.css';
 export function HomePage() {
 
     const [start, end] = currentYearRange();
-    const years = listOfYears(2022);    // TODO: Make the year be the year they signed up, not arbitarily 2022
 
-    const { setUser } = useAuth();
+    const { user, setUser } = useAuth();
     const [compoundScores, setCompoundScores] = useState([]);
     const [error, setError] = useState("");
     const [period, setPeriod] = useState([start, end]);
     const [selectedDate, setSelectedDate] = useState(null);
+
+    const years = listOfYears(Number(user.sign_up_date.slice(0, 4))); 
 
     const navigate = useNavigate();
 

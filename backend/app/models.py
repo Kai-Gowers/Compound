@@ -13,6 +13,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(unique=True, index=True)
     password_hash: Mapped[str]
     last_active_day: Mapped[Date] = mapped_column(default=Date.today)
+    sign_up_date: Mapped[Date] = mapped_column(default=Date.today)
 
     scores: Mapped[list["Score"]] = relationship(
         back_populates="user"

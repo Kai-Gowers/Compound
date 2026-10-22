@@ -18,6 +18,7 @@ def me(current_user: User = Depends(get_current_user)) -> UserResponse:
     return UserResponse(
         id=current_user.id,
         email=current_user.email,
+        sign_up_date=current_user.sign_up_date,
     )
 
 @router.post("/signup")
@@ -41,7 +42,8 @@ def signup(
     user = User(
         email = data.email,
         password_hash = password_hash,
-        last_active_day = Date.today()
+        last_active_day = Date.today(),
+        sign_up_date = Date.today(),
     )
     
     db.add(user)
