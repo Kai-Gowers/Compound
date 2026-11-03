@@ -1,35 +1,7 @@
 from datetime import date
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-
-from app.database import Base
-from app.models import User, Goal, Score
+from app.models import Goal, Score
 from app.services.scores import recalculate_score_for_date
-
-import pytest
-
-@pytest.fixture
-def db():
-    engine = create_engine("sqlite:///:memory:")
-    Base.metadata.create_all(bind=engine)
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    yield session
-    session.close()
-
-@pytest.fixture
-def user(db):
-    new_user = User(
-        email="test@example.com",
-        password_hash="x",
-        last_active_day=date(2026, 10, 29),
-        sign_up_date=date(2026, 10, 29),
-    )
-    db.add(new_user)
-    db.flush()
-    return new_user
-
 
 def test_score_is_zero_when_there_are_no_goals(db, user):
 

@@ -25,3 +25,4 @@ app.include_router(goals.router)
 def root():
     return {"message": "Compound API"}
 
+    
