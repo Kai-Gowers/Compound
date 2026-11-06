@@ -34,17 +34,7 @@ def test_get_current_goals_with_cookie(client):
     assert isinstance(response.json(), list)
 
 
-def test_get_current_goals_carry_over(client, db):
-
-    signup_response = client.post("/auth/signup", json={
-        "email": "test@gmail.com",
-        "password": "testpassword",
-    })
-
-    login_response = client.post("/auth/login", json={
-        "email": "test@gmail.com",
-        "password": "testpassword",
-    })
+def test_get_current_goals_carry_over(auth_client, db):
 
     user = db.query(User).filter(
         User.email == "test@gmail.com",
@@ -62,27 +52,17 @@ def test_get_current_goals_carry_over(client, db):
     db.add(new_goal)
     db.flush()
 
-    response = client.get("/goals")
+    response = auth_client.get("/goals")
 
     assert response.status_code == 200
     assert response.json()[0]["description"] == new_goal.description
     assert response.json()[0]["completed"] == False
 
-    response2 = client.get("/goals")
+    response2 = auth_client.get("/goals")
     assert len(response2.json()) == len(response.json())
 
 
-def test_get_past_goals_not_carry_over(client, db):
-
-    signup_response = client.post("/auth/signup", json={
-        "email": "test@gmail.com",
-        "password": "testpassword",
-    })
-
-    login_response = client.post("/auth/login", json={
-        "email": "test@gmail.com",
-        "password": "testpassword",
-    })
+def test_get_past_goals_not_carry_over(auth_client, db):
 
     user = db.query(User).filter(
         User.email == "test@gmail.com",
@@ -101,7 +81,7 @@ def test_get_past_goals_not_carry_over(client, db):
     db.add(goal_2_days_ago)
     db.flush()
 
-    response = client.get(f"/goals?date={user.last_active_day + timedelta(days=1)}")
+    response = auth_client.get(f"/goals?date={user.last_active_day + timedelta(days=1)}")
 
     assert response.status_code == 200
     assert len(response.json()) == 0

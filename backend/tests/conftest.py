@@ -59,5 +59,21 @@ def client(db):
 
     app.dependency_overrides.clear()
 
+@pytest.fixture
+def auth_client(client):
 
+    signup_response = client.post("/auth/signup", json={
+        "email": "test@gmail.com",
+        "password": "testpassword",
+    })
 
+    assert signup_response.status_code == 200
+
+    login_response = client.post("/auth/login", json={
+        "email": "test@gmail.com",
+        "password": "testpassword",
+    })
+
+    assert login_response.status_code == 200
+
+    yield client
