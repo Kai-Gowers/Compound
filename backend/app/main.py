@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .database import Base, engine
-from .routers import auth, scores, goals
+from .routers import auth, scores, goals, friends
 
 app = FastAPI()
 
@@ -19,6 +19,7 @@ Base.metadata.create_all(bind=engine)
 app.include_router(auth.router)
 app.include_router(scores.router)
 app.include_router(goals.router)
+app.include_router(friends.router)
 
 
 @app.get('/')
