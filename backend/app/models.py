@@ -64,4 +64,26 @@ class Goal(Base):
     )
 
 
+class Follow(Base):
+    __tablename__ = "follows"
+    __table_args__ = (
+        UniqueConstraint(
+            "follower_id",
+            "followee_id",
+            name="uq_follower_to_followee",
+        ),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+
+    follower_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id"),
+    )
+    followee_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id"),
+    )
+
+    created_at: Mapped[Date] = mapped_column(default=Date.today)
+
+    
 

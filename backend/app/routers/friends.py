@@ -1,12 +1,10 @@
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from ..security import get_current_user
-from ..models import Goal, User
-from ..schemas import GoalResponse, GoalCreate, GoalUpdate
+from ..models import User
+from ..schemas import UserResponse
 from ..database import get_db
-from ..services.scores import recalculate_score_for_date
-from datetime import date as Date
 
 router = APIRouter(
     prefix="/friends",
@@ -34,8 +32,14 @@ def unfollow(
 @router.get("/{user_id}")
 def get_followers(
     user_id: int,
+    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
-):
-    pass
+) -> list[UserResponse]:
+
+    if not user_id:
+        user_id = current_user.id
+
+        
+
 
 
