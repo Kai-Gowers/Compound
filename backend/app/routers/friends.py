@@ -44,13 +44,33 @@ def follow(
     db.add(new_follow)
     db.commit()
 
-@router.post("/unfollow")
+@router.post("/unfollow/{followee_id}")
 def unfollow(
     followee_id: int,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ) -> None:
-    pass
+
+    if followee_id == current_user.id:
+        raise HTTPException(status_code=400, detail="You cannot unfollow yourself")
+    
+    followee = db.query(User).filter(
+        User.id == followee_id,
+    ).first()
+
+    if not followee:
+        raise HTTPException(status_code=404, detail="Followee not found")
+    
+    follows = db.query(Follow).filter(
+        Follow.follower_id == current_user.id,
+        Follow.followee_id == followee_id,
+    ).first()
+
+    if not follows:
+        raise HTTPException(status_code=400, detail="You don't follow this person")
+    
+    db.delete(follows)
+    db.commit()
 
 
 @router.get("/{user_id}")
@@ -60,10 +80,23 @@ def get_followers(
     db: Session = Depends(get_db)
 ) -> list[UserResponse]:
 
-    if not user_id:
-        user_id = current_user.id
+    followers = db.query(User).join(
+        Follow,
+        Follow.follower_id == User.id,
+    ).filter(
+        Follow.followee_id == user_id,
+    ).all()
+    
+    return [
+        UserResponse(
+            id=follower.id,
+            email=follower.email,
+            sign_up_date=follower.sign_up_date,
+        )
+        for follower in followers
+    ]
 
-    pass
+
 
         
 
