@@ -106,6 +106,7 @@ export function HomePage() {
                     </aside>
                 )}
             </div>
+
         </main>
     );
 
