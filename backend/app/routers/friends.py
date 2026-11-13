@@ -97,8 +97,23 @@ def get_followers(
     ]
 
 
+@router.get("/")
+def get_users_with_prefix(
+    num_users: int,
+    search_prefix: str,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+  
+    users = db.query(User).filter(
+        User.email.startswith(search_prefix),
+    ).limit(num_users).all()
 
-        
-
-
-
+    return [
+        UserResponse(
+            id=user.id,
+            email=user.email,
+            sign_up_date=user.sign_up_date,
+        )
+        for user in users
+    ]
