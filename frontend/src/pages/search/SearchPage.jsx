@@ -10,9 +10,9 @@ export function SearchPage() {
     const [users, setUsers] = useState([]);
     const [error, setError] = useState("");
 
-    const searchResult = async () => {
+    const searchResult = async (prefix) => {
         try {
-            const response = await api.get(`/friends?num_users=${10}&search_prefix=${searchText}`);
+            const response = await api.get(`/friends?num_users=${10}&search_prefix=${prefix}`);
             setUsers(response.data);
             setError("");
         } catch (error) {
@@ -21,8 +21,9 @@ export function SearchPage() {
     }
 
     function saveSearchText(event) {
-        setSearchText(event.target.value);
-        searchResult();
+        const next = event.target.value
+        setSearchText(next);
+        searchResult(next);
     }
 
     // ** NEW API ENDPOINT NEEDED, A SEARCH QUERY** 
