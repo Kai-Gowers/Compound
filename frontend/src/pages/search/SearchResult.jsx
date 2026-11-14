@@ -24,6 +24,9 @@ export function SearchResult({ searchResult }) {
         }
     }
 
+    // TODO: wire up the followers and following button
+    // TOOD: add CSS to make the page look pretty
+
     return (
         <div className="search-result">
 

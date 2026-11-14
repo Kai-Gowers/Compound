@@ -153,4 +153,6 @@ def get_users_with_prefix(
             )
         )
 
+    # TODO: make it such that you can't search for yourself
+
     return payload

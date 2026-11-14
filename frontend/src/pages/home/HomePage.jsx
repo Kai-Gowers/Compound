@@ -61,6 +61,8 @@ export function HomePage() {
         getScores();
     }, [period]);
 
+    // TODO: add a see followers and following list for self
+
     return (
         <main className="home-page">
 
