@@ -12,7 +12,7 @@ export function SearchPage() {
 
     const searchResult = async (prefix) => {
         try {
-            const response = await api.get(`/friends?num_users=${10}&search_prefix=${prefix}`);
+            const response = await api.get(`/friends?num_users=${10}&search_prefix=${prefix}`);            
             setUsers(response.data);
             setError("");
         } catch (error) {
@@ -26,20 +26,9 @@ export function SearchPage() {
         searchResult(next);
     }
 
-    // ** NEW API ENDPOINT NEEDED, A SEARCH QUERY** 
-    // Every time that the input changes and it is non-empty, we show a truncated list (10) of users matching that search
-    // So, we need to add an API endpoint that takes in a query param with the prefix in the search and returns at most 10 users matching that search
-    // if there are no users matching the search, we say no users beginning with ___
-
-
-    // We don't even need a button to send the query, it should automatically happen with every new letter
-
-
-    // DISPLAYING THE USERS
-    // We need to have new UserSearchDisplay component in which we go through the list of users returned by the query and add one of those UserSearchDisplay objects to the container
     
     // USER attribute
-    // users need to have a username attribute that they set so that we can search
+    // users need to have a username attribute that they set so that we can search by that. Right now we have to search by email which is bad.
 
 
     return (

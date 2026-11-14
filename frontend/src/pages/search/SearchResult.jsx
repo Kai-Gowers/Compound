@@ -1,13 +1,15 @@
 import './SearchResult.css';
 import { api } from "../../api/client";
+import { useState } from 'react';
 
 export function SearchResult({ searchResult }) {
 
+    const [followStatus, setFollowStatus] = useState(searchResult.is_following);
 
     const follow = async () => {
         try {
             const response = await api.post(`/friends/follow/${searchResult.id}`);
-            alert(`You now follow ${searchResult.email}`);
+            setFollowStatus(true);
         } catch (error) {
             alert(error.response?.data?.detail);
         }
@@ -16,7 +18,7 @@ export function SearchResult({ searchResult }) {
     const unfollow = async () => {
         try {
             const response = await api.post(`/friends/unfollow/${searchResult.id}`);
-            alert(`You unfollowed ${searchResult.email}`);
+            setFollowStatus(false);
         } catch (error) {
             alert(error.response?.data?.detail);
         }
@@ -27,21 +29,21 @@ export function SearchResult({ searchResult }) {
 
             {searchResult.email}
 
-            {/* We need to add a check for each user that pops up to see if we follow them, so that we know which follow/unfollow button to display */}
-
-            <button 
-                className="follow-button"
-                onClick={follow}
-            >
-                Follow
-            </button>
-
-            <button 
+            {followStatus ? (
+                <button 
                 className="unfollow-button"
                 onClick={unfollow}
             >
                 Unfollow
             </button>
+            ) : (
+                <button 
+                    className="follow-button"
+                    onClick={follow}
+                >
+                    Follow
+                </button>
+            )}
 
             <button className="followers-button">
                 Followers

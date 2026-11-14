@@ -9,7 +9,7 @@ export function SearchResults({ searchResults }) {
 
             {searchResults.map((searchResult) => {
                 return (
-                    <SearchResult searchResult={searchResult}/>
+                    <SearchResult key={searchResult.id} searchResult={searchResult}/>
                 );
             })}
 

@@ -4,7 +4,7 @@ from sqlalchemy import Boolean
 from sqlalchemy.orm import Session
 from ..security import get_current_user
 from ..models import User, Follow
-from ..schemas import UserResponse
+from ..schemas import UserResponse, UserSearchResponse
 from ..database import get_db
 
 router = APIRouter(
@@ -74,7 +74,7 @@ def unfollow(
     db.commit()
 
 
-@router.get("/{user_id}")
+@router.get("/{user_id}/followers")
 def get_followers(
     user_id: int,
     current_user: User = Depends(get_current_user),
@@ -97,7 +97,7 @@ def get_followers(
         for follower in followers
     ]
 
-@router.get("/{user_id}")
+@router.get("/{user_id}/following")
 def get_following(
     user_id: int,
     current_user: User = Depends(get_current_user),
@@ -120,21 +120,6 @@ def get_following(
         for followee in following
     ]
 
-'''
-@router.get("/{user_id}")
-def check_follow_status(
-    user_id: int,
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db),
-) -> Boolean:
-
-    follow = db.query(Follow).filter(
-        Follow.followee_id == user_id,
-        Follow.follower_id == current_user.id,
-    ).first()
-
-    return True if follow else False
-'''
 
 @router.get("/")
 def get_users_with_prefix(
@@ -148,11 +133,24 @@ def get_users_with_prefix(
         User.email.startswith(search_prefix),
     ).limit(num_users).all()
 
-    return [
-        UserResponse(
-            id=user.id,
-            email=user.email,
-            sign_up_date=user.sign_up_date,
+    payload = []
+
+    for user in users:
+
+        follow = db.query(Follow).filter(
+            Follow.followee_id == user.id,
+            Follow.follower_id == current_user.id,
+        ).first()
+
+        is_following = True if follow else False
+
+        payload.append(
+            UserSearchResponse(
+                id=user.id,
+                email=user.email,
+                sign_up_date=user.sign_up_date,
+                is_following=is_following,
+            )
         )
-        for user in users
-    ]
+
+    return payload

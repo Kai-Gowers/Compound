@@ -44,6 +44,11 @@ class UserResponse(BaseModel):
     email: str
     sign_up_date: Date
 
+class UserSearchResponse(BaseModel):
+    id: int
+    email: str
+    sign_up_date: Date
+    is_following: bool
 
 class ScoreResponse(BaseModel):
     id: int | None
