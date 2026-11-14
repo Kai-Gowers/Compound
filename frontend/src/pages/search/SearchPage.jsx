@@ -2,7 +2,7 @@ import './SearchPage.css';
 import { useState } from 'react';
 
 import { api } from "../../api/client";
-
+import { SearchResults } from './SearchResults'
 
 export function SearchPage() {
 
@@ -58,17 +58,7 @@ export function SearchPage() {
                 </button>
             </div>
 
-            <div className="search-response">
-
-                {users.map((user) => {
-                    return (
-                        <div>
-                            {user.email}
-                        </div>
-                    );
-                })}
-
-            </div>
+            <SearchResults searchResults={users}/>
 
         </div>
     );
