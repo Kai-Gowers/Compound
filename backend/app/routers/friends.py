@@ -1,5 +1,6 @@
 
 from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy import Boolean
 from sqlalchemy.orm import Session
 from ..security import get_current_user
 from ..models import User, Follow
@@ -96,6 +97,44 @@ def get_followers(
         for follower in followers
     ]
 
+@router.get("/{user_id}")
+def get_following(
+    user_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+) -> list[UserResponse]:
+
+    following = db.query(User).join(
+        Follow,
+        Follow.followee_id == User.id,
+    ).filter(
+        Follow.follower_id == user_id,
+    ).all()
+    
+    return [
+        UserResponse(
+            id=followee.id,
+            email=followee.email,
+            sign_up_date=followee.sign_up_date,
+        )
+        for followee in following
+    ]
+
+'''
+@router.get("/{user_id}")
+def check_follow_status(
+    user_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> Boolean:
+
+    follow = db.query(Follow).filter(
+        Follow.followee_id == user_id,
+        Follow.follower_id == current_user.id,
+    ).first()
+
+    return True if follow else False
+'''
 
 @router.get("/")
 def get_users_with_prefix(
