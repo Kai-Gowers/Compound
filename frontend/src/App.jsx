@@ -3,6 +3,7 @@ import { AuthPage } from './pages/AuthPage';
 import { useAuth } from './auth/AuthProvider';
 import { HomePage } from './pages/home/HomePage';
 import { SearchPage } from './pages/search/SearchPage';
+import { ProfilePage } from './pages/profile/ProfilePage';
 import { Footer } from './components/Footer';
 
 import './App.css';
@@ -25,6 +26,7 @@ function App() {
                 element={user ? <AppLayout /> : <Navigate to="/" replace />}
             >
                 <Route path="/home" element={<HomePage />}></Route>
+                <Route path="/profile" element={<ProfilePage />}></Route>
                 <Route path="/search" element={<SearchPage />}></Route>
             </Route>
         </Routes>
