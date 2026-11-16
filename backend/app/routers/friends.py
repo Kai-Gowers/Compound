@@ -131,6 +131,7 @@ def get_users_with_prefix(
   
     users = db.query(User).filter(
         User.email.startswith(search_prefix),
+        User.email != current_user.email,
     ).limit(num_users).all()
 
     payload = []
