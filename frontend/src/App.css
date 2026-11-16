@@ -2,6 +2,11 @@
   min-height: 100vh;
 }
 
+.app-shell {
+  min-height: 100vh;
+  padding-bottom: 72px;
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;

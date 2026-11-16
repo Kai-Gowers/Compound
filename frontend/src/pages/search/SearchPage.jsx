@@ -32,23 +32,26 @@ export function SearchPage() {
 
 
     return (
-        <div>
-            <div className="search-input-contiainer">
-                <input
-                    placeholder="Search for a User"
-                    size="30"
-                    onChange={saveSearchText}
-                    value={searchText}
-                    className="search-input"
-                />
+        <div className="search-page">
+            <header className="search-header">
+                <p className="home-eyebrow">Friends</p>
+                <h1>Search</h1>
+            </header>
 
-                <button>
-                    Send
-                </button>
+            <div className="search-card">
+                <div className="search-input-container">
+                    <input
+                        placeholder="Search by email"
+                        onChange={saveSearchText}
+                        value={searchText}
+                        className="search-input"
+                    />
+                </div>
+
+                {error ? <p className="search-error">{error}</p> : null}
+
+                <SearchResults searchResults={users}/>
             </div>
-
-            <SearchResults searchResults={users}/>
-
         </div>
     );
 

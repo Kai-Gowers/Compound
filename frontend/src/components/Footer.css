@@ -1,0 +1,31 @@
+.app-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  height: 56px;
+  background: #ffffff;
+  border-top: 1px solid #dfe5df;
+}
+
+.app-footer a {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  color: #68736b;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.app-footer a:hover {
+  color: #17211a;
+  background: #f6f8f6;
+}
+
+.app-footer a.active {
+  color: #238636;
+}

@@ -24,36 +24,37 @@ export function SearchResult({ searchResult }) {
         }
     }
 
-    // TODO: wire up the followers and following button
+    // TODO: wire up the followers and following button so that we can see these lists of other people
     // TOOD: add CSS to make the page look pretty
 
     return (
         <div className="search-result">
+            <span className="search-result-email">{searchResult.email}</span>
 
-            {searchResult.email}
+            <div className="search-result-actions">
+                {followStatus ? (
+                    <button
+                        className="unfollow-button"
+                        onClick={unfollow}
+                    >
+                        Unfollow
+                    </button>
+                ) : (
+                    <button
+                        className="follow-button"
+                        onClick={follow}
+                    >
+                        Follow
+                    </button>
+                )}
 
-            {followStatus ? (
-                <button 
-                className="unfollow-button"
-                onClick={unfollow}
-            >
-                Unfollow
-            </button>
-            ) : (
-                <button 
-                    className="follow-button"
-                    onClick={follow}
-                >
-                    Follow
+                <button className="ghost-button">
+                    Followers
                 </button>
-            )}
-
-            <button className="followers-button">
-                Followers
-            </button>
-            <button className="following-button">
-                Following
-            </button>
+                <button className="ghost-button">
+                    Following
+                </button>
+            </div>
         </div>
     );
 

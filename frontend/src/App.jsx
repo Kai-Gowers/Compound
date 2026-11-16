@@ -36,9 +36,9 @@ export default App
 
 function AppLayout() {
     return (
-        <>
+        <div className="app-shell">
             <Outlet />
             <Footer />
-        </>
+        </div>
     )
 }

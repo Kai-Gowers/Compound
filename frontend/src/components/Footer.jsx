@@ -1,25 +1,11 @@
-import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import "./Footer.css";
 
 export function Footer() {
-
-    const navigate = useNavigate();
-
     return (
-        <nav>
-            <button 
-                className="homebutton"
-                onClick={() => navigate("/home")}
-            >
-                Home
-            </button>
-            <button 
-                className="searchbutton"
-                onClick={() => navigate("/search")}
-            >
-                Search
-            </button>
+        <nav className="app-footer">
+            <NavLink to="/home">Home</NavLink>
+            <NavLink to="/search">Search</NavLink>
         </nav>
     );
-
 }

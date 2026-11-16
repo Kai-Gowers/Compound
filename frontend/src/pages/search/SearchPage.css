@@ -1,0 +1,48 @@
+.search-page {
+  width: min(100% - 32px, 980px);
+  margin: 0 auto;
+  padding: 64px 0;
+}
+
+.search-header {
+  margin-bottom: 20px;
+}
+
+.search-header h1 {
+  margin: 2px 0 0;
+  color: #17211a;
+  font-size: 1.75rem;
+}
+
+.search-card {
+  padding: 20px 24px;
+  background: #ffffff;
+  border: 1px solid #dfe5df;
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgb(31 41 55 / 6%);
+}
+
+.search-input-container {
+  margin-bottom: 8px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem;
+  color: #1f2937;
+  background: #ffffff;
+  border: 1px solid #cfd8d1;
+  border-radius: 6px;
+}
+
+.search-error {
+  margin: 8px 0 0;
+  color: #c62828;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 520px) {
+  .search-page {
+    padding: 32px 0;
+  }
+}

@@ -1,6 +1,5 @@
 import './SearchResults.css';
 import { SearchResult } from './SearchResult';
-import { SearchPage } from './SearchPage';
 
 export function SearchResults({ searchResults }) {
     
