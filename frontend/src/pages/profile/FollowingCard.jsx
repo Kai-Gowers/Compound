@@ -1,13 +1,24 @@
 import "./FollowingCard.css";
 import { useState } from 'react';
+import { api } from "../../api/client";
+import { useAuth } from "../../auth/AuthProvider";
+import { ForeignUserCard } from "./ForeignUserCard";
 
 export function FollowingCard() {
 
     const [showFollowing, setShowFollowing] = useState(false);
+    const [followingList, setFollowingList] = useState([]);
+    const { user } = useAuth();
+    
+    const getFollowing = async () => {
+        const response = await api.get(`/friends/${user.id}/following`);
+        setFollowingList(response.data);
+        setShowFollowing(true);
+    }
 
     return (
         <>
-            <button onClick={() => setShowFollowing(true)}>
+            <button onClick={getFollowing}>
                 Following
             </button>
 
@@ -18,7 +29,13 @@ export function FollowingCard() {
                             Close
                         </button>
 
-                        <div>Kai, Jake, Jack</div>
+                        {followingList.map((followingUnit) => {
+                            
+                            return (
+                                <ForeignUserCard foreignUser={followingUnit}/>
+                            );
+
+                        })}
                     </div>
                 </div>
             )}

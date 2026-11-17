@@ -1,13 +1,24 @@
 import "./FollowersCard.css";
 import { useState } from 'react';
+import { api } from "../../api/client";
+import { useAuth } from "../../auth/AuthProvider";
+import { ForeignUserCard } from "./ForeignUserCard";
 
 export function FollowersCard() {
 
     const [showFollowers, setShowFollowers] = useState(false);
+    const [followerList, setFollowerList] = useState([]);
+    const { user } = useAuth();
+    
+    const getFollowers = async () => {
+        const response = await api.get(`/friends/${user.id}/followers`);
+        setFollowerList(response.data);
+        setShowFollowers(true);
+    }
 
     return (
         <>
-            <button onClick={() => setShowFollowers(true)}>
+            <button onClick={getFollowers}>
                 Followers
             </button>
 
@@ -18,7 +29,13 @@ export function FollowersCard() {
                             Close
                         </button>
 
-                        <div>Kai, Alice, Bob</div>
+                        {followerList.map((followerUnit) => {
+                            
+                            return (
+                                <ForeignUserCard foreignUser={followerUnit}/>
+                            );
+
+                        })}
                     </div>
                 </div>
             )}
