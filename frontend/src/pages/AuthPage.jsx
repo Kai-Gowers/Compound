@@ -11,6 +11,7 @@ export function AuthPage() {
     const { setUser } = useAuth();
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
@@ -21,21 +22,19 @@ export function AuthPage() {
         e.preventDefault();
         setError("");
 
-        const endpoint = isLogin ? "/login" : "/signup";
-
         try {
 
-            await api.post(
-                `/auth${endpoint}`,
-                { email, password }
-            );
-            
             if (!isLogin) {
                 await api.post(
-                    `/auth/login`,
-                    { email, password }
+                    `/auth/signup`,
+                    { email, username, password }
                 );
             }
+
+            await api.post(
+                `/auth/login`,
+                { email, password }
+            );
             
             const me  = await api.get("/auth/me");
             setUser(me.data);
@@ -76,6 +75,16 @@ export function AuthPage() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
+
+                    {!isLogin && 
+                        <input
+                            type="text"
+                            placeholder="Username"
+                            aria-label="Username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    }
 
                     <input
                         type="password"

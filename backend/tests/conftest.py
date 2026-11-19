@@ -35,6 +35,7 @@ def user(db):
 
     new_user = User(
         email="test@example.com",
+        username="testuser",
         password_hash="x",
         last_active_day=date(2026, 10, 29),
         sign_up_date=date(2026, 10, 29),
@@ -64,6 +65,7 @@ def auth_client(client):
 
     signup_response = client.post("/auth/signup", json={
         "email": "test@gmail.com",
+        "username": "testuser",
         "password": "testpassword",
     })
 

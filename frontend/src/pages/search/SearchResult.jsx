@@ -24,12 +24,10 @@ export function SearchResult({ searchResult }) {
         }
     }
 
-    // TODO: wire up the followers and following button so that we can see these lists of other people
-    // TOOD: add CSS to make the page look pretty
 
     return (
         <div className="search-result">
-            <span className="search-result-email">{searchResult.email}</span>
+            <span className="search-result-username">{searchResult.username}</span>
 
             <div className="search-result-actions">
                 {followStatus ? (

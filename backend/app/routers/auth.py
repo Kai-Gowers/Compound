@@ -17,7 +17,7 @@ router = APIRouter(
 def me(current_user: User = Depends(get_current_user)) -> UserResponse:
     return UserResponse(
         id=current_user.id,
-        email=current_user.email,
+        username=current_user.username,
         sign_up_date=current_user.sign_up_date,
     )
 
@@ -27,20 +27,31 @@ def signup(
     db: Session = Depends(get_db)
 ):
 
-    existing_user = db.scalar(
+    existing_user_email = db.scalar(
         select(User).where(User.email == data.email)
     )
+    
+    existing_user_username = db.scalar(
+        select(User).where(User.username == data.username)
+    )
 
-    if existing_user:
+    if existing_user_email:
         raise HTTPException(
             status_code=400,
             detail="User already exists"
+        )
+    
+    if existing_user_username:
+        raise HTTPException(
+            status_code=400,
+            detail="Username is already taken, try another"
         )
 
     password_hash = hash_password(data.password)
 
     user = User(
         email = data.email,
+        username = data.username,
         password_hash = password_hash,
         last_active_day = Date.today(),
         sign_up_date = Date.today(),

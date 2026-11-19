@@ -19,7 +19,7 @@ export function ProfilePage() {
                 <div className="profile-identity">
                     <div className="profile-avatar" aria-hidden="true" />
 
-                    <p className="profile-username">username</p>
+                    <p className="profile-username">{user.username}</p>
 
                     <div className="profile-stats">
                         <FollowersCard />
@@ -28,10 +28,6 @@ export function ProfilePage() {
                 </div>
 
                 <dl className="profile-details">
-                    <div>
-                        <dt>Email</dt>
-                        <dd>{user.email}</dd>
-                    </div>
                     <div>
                         <dt>Sign-up date</dt>
                         <dd>{user.sign_up_date}</dd>

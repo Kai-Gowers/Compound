@@ -26,11 +26,6 @@ export function SearchPage() {
         searchResult(next);
     }
 
-    
-    // USER attribute
-    // users need to have a username attribute that they set so that we can search by that. Right now we have to search by email which is bad.
-
-
     return (
         <div className="search-page">
             <header className="search-header">
@@ -41,7 +36,7 @@ export function SearchPage() {
             <div className="search-card">
                 <div className="search-input-container">
                     <input
-                        placeholder="Search by email"
+                        placeholder="Search by username"
                         onChange={saveSearchText}
                         value={searchText}
                         className="search-input"

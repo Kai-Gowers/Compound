@@ -12,6 +12,7 @@ def test_get_current_goals_with_cookie(client):
 
     signup_response = client.post("/auth/signup", json={
         "email": "test@gmail.com",
+        "username": "testuser",
         "password": "testpassword",
     })
 

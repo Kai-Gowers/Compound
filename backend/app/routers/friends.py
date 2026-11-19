@@ -91,7 +91,7 @@ def get_followers(
     return [
         UserResponse(
             id=follower.id,
-            email=follower.email,
+            username=follower.username,
             sign_up_date=follower.sign_up_date,
         )
         for follower in followers
@@ -114,7 +114,7 @@ def get_following(
     return [
         UserResponse(
             id=followee.id,
-            email=followee.email,
+            username=followee.username,
             sign_up_date=followee.sign_up_date,
         )
         for followee in following
@@ -130,8 +130,8 @@ def get_users_with_prefix(
 ):
   
     users = db.query(User).filter(
-        User.email.startswith(search_prefix),
-        User.email != current_user.email,
+        User.username.startswith(search_prefix),
+        User.username != current_user.username,
     ).limit(num_users).all()
 
     payload = []
@@ -148,7 +148,7 @@ def get_users_with_prefix(
         payload.append(
             UserSearchResponse(
                 id=user.id,
-                email=user.email,
+                username=user.username,
                 sign_up_date=user.sign_up_date,
                 is_following=is_following,
             )

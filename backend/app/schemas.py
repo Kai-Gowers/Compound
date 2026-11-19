@@ -3,6 +3,7 @@ from datetime import date as Date
 
 class UserCreate(BaseModel):
     email: str
+    username: str
     password: str
 
     @field_validator("email")
@@ -13,6 +14,16 @@ class UserCreate(BaseModel):
             raise ValueError("email cannot be empty")
         if "@" not in v:
             raise ValueError("email must contain @")
+        return v
+
+    @field_validator("username")
+    @classmethod
+    def validate_username(cls, v: str) -> str:
+        v = v.strip()
+        if not v:
+            raise ValueError("username cannot be empty")
+        if len(v) < 5:
+            raise ValueError("username has to be at least 5 characters")
         return v
     
     @field_validator("password")
@@ -41,12 +52,12 @@ class UserLogin(BaseModel):
     
 class UserResponse(BaseModel):
     id: int
-    email: str
+    username: str
     sign_up_date: Date
 
 class UserSearchResponse(BaseModel):
     id: int
-    email: str
+    username: str
     sign_up_date: Date
     is_following: bool
 
