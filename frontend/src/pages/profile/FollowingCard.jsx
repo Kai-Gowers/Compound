@@ -1,5 +1,5 @@
 import "./FollowingCard.css";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { api } from "../../api/client";
 import { useAuth } from "../../auth/AuthProvider";
 import { ForeignUserCard } from "./ForeignUserCard";
@@ -10,15 +10,28 @@ export function FollowingCard() {
     const [followingList, setFollowingList] = useState([]);
     const { user } = useAuth();
     
-    const getFollowing = async () => {
-        const response = await api.get(`/friends/${user.id}/following`);
-        setFollowingList(response.data);
-        setShowFollowing(true);
+    const getFollowing = async (isInitialRender) => {
+        try {
+            const response = await api.get(`/friends/${user.id}/following`);
+            setFollowingList(response.data);
+            if (!isInitialRender) {
+                setShowFollowing(true);
+            }
+        } catch (error) {
+            alert("Unable to get following");
+        }
     }
+
+    useEffect(() => {
+        getFollowing(true);
+    }, []);
 
     return (
         <>
-            <button onClick={getFollowing}>
+
+            {followingList.length}
+
+            <button onClick={() => getFollowing(false)}>
                 Following
             </button>
 

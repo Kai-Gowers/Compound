@@ -1,5 +1,5 @@
 import "./FollowersCard.css";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { api } from "../../api/client";
 import { useAuth } from "../../auth/AuthProvider";
 import { ForeignUserCard } from "./ForeignUserCard";
@@ -10,15 +10,28 @@ export function FollowersCard() {
     const [followerList, setFollowerList] = useState([]);
     const { user } = useAuth();
     
-    const getFollowers = async () => {
-        const response = await api.get(`/friends/${user.id}/followers`);
-        setFollowerList(response.data);
-        setShowFollowers(true);
+    const getFollowers = async (isInitialRender) => {
+        try {
+            const response = await api.get(`/friends/${user.id}/followers`);
+            setFollowerList(response.data);
+            if (!isInitialRender) {
+                setShowFollowers(true);
+            }
+        } catch (error) {
+            alert("Unable to get followers");
+        }
     }
+
+    useEffect(() => {
+        getFollowers(true);
+    }, []);
 
     return (
         <>
-            <button onClick={getFollowers}>
+
+            {followerList.length}
+
+            <button onClick={() => getFollowers(false)}>
                 Followers
             </button>
 
