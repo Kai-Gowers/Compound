@@ -1,0 +1,19 @@
+.foreign-user-information {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 0;
+  border-bottom: 1px solid #dfe5df;
+  color: #17211a;
+  font-weight: 600;
+}
+
+.foreign-user-date {
+  color: #68736b;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.foreign-user-information:last-child {
+  border-bottom: none;
+}

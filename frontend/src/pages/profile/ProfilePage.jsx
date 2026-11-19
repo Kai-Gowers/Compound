@@ -1,28 +1,49 @@
 import "./ProfilePage.css";
 import { FollowersCard } from "./FollowersCard";
 import { FollowingCard } from "./FollowingCard";
+import { useAuth } from "../../auth/AuthProvider";
 
 export function ProfilePage() {
 
-    
-    
+    const { user } = useAuth();
 
     return (
 
-        <div>
+        <main className="profile-page">
 
-            <div>Profile</div>
+            <header className="profile-header">
+                <h1>Profile</h1>
+            </header>
 
+            <section className="profile-card">
+                <div className="profile-identity">
+                    <div className="profile-avatar" aria-hidden="true" />
 
-            <div>Email:</div>
+                    <p className="profile-username">username</p>
 
-            <div>Username:</div>
+                    <div className="profile-stats">
+                        <FollowersCard />
+                        <FollowingCard />
+                    </div>
+                </div>
 
-            <FollowersCard />
-            
-            <FollowingCard />
+                <dl className="profile-details">
+                    <div>
+                        <dt>Email</dt>
+                        <dd>{user.email}</dd>
+                    </div>
+                    <div>
+                        <dt>Sign-up date</dt>
+                        <dd>{user.sign_up_date}</dd>
+                    </div>
+                    <div>
+                        <dt>Bio</dt>
+                        <dd>bio: none</dd>
+                    </div>
+                </dl>
+            </section>
 
-        </div>
+        </main>
 
     );
 

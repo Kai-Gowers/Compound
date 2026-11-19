@@ -29,10 +29,8 @@ export function FollowersCard() {
     return (
         <>
 
-            {followerList.length}
-
-            <button onClick={() => getFollowers(false)}>
-                Followers
+            <button className="profile-stat" onClick={() => getFollowers(false)}>
+                <strong>{followerList.length}</strong> Followers
             </button>
 
             {showFollowers && (
